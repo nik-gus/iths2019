@@ -1,4 +1,4 @@
-package view;
+package management;
 
 import app.Application;
 import model.Employee;
@@ -6,14 +6,15 @@ import model.Employee;
 public class ManagementUI {
 
 	public void showMainMenu() {
-		System.out.println("\n---------- MAIN MENU ----------");
+		System.out.println("\n---------- MAIN MENU ----------\n");
 		System.out.println("1. Employee Management");
 		System.out.println("2. Employee Statistics");
-		System.out.println("3. Exit");
+		System.out.println("3. Employee Sort");
+		System.out.println("0. Exit");
 	}
 
 	public void showManagementMenu() {
-		System.out.println("\n---------- MANAGEMENT MENU ----------");
+		System.out.println("\n---------- MANAGEMENT MENU ----------\n");
 		System.out.println("1.  Register new employee");
 		System.out.println("2.  Delete employee");
 		System.out.println("3.  Update name of employee");		

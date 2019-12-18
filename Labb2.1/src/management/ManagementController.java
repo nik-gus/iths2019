@@ -1,8 +1,7 @@
-package controller;
-///test test update test
+package management;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.List;
 
 import app.Application;
 import model.Doctor;
@@ -11,15 +10,14 @@ import model.EmployeeRegister;
 import model.Nurse;
 import model.Receptionist;
 import utilities.EmploymentStatus;
-import view.ManagementUI;
 
 public class ManagementController {
 	private ManagementUI mUI;
-	private HashMap<Integer, Employee> empMap;
+	private List<Employee> empList;
 
-	public ManagementController(EmployeeRegister empRec, ManagementUI ui) {
+	public ManagementController(EmployeeRegister empReg, ManagementUI ui) {
 		this.mUI = ui;
-		empMap = empRec.getEmpMap();
+		empList = empReg.getEmpList();
 	}
 
 	public void employeeManagement() {
@@ -91,27 +89,27 @@ public class ManagementController {
 	}
 
 	public void addEmployee(Employee emp) {
-		empMap.put(emp.getEMPID(), emp);
+		empList.add(emp.getEMPID(), emp);
 	}
 
 	public void deleteEmployee(int empID) {
-		empMap.remove(empID);
+		empList.remove(empID);
 	}
 
 	public void updateName(int empID, String name) {
-		empMap.get(empID).setName(name);
+		empList.get(empID).setName(name);
 	}
 
 	public void updateSalary(int empID, double salary) {
-		empMap.get(empID).setSalary(salary);
+		empList.get(empID).setSalary(salary);
 	}
 
 	public Employee getEmployeeByID(int id) {
-		return empMap.get(id);
+		return empList.get(id);
 	}
 
 	public void printEmployeesByName(String name) {
-		for (Employee emp : empMap.values()) {
+		for (Employee emp : empList) {
 			if (emp.getName().equalsIgnoreCase(name)) {
 				mUI.printEmployee(emp);
 			}
@@ -119,13 +117,13 @@ public class ManagementController {
 	}
 
 	public void printAllEmployees() {
-		for (Employee emp: empMap.values()) {
+		for (Employee emp: empList) {
 			mUI.printEmployee(emp);
 		}
 	}
 
 	public void printAllDoctors() {
-		for (Employee emp: empMap.values()) {
+		for (Employee emp: empList) {
 			if (emp instanceof Doctor) {
 				mUI.printEmployee(emp);
 			}
@@ -134,10 +132,10 @@ public class ManagementController {
 
 	/* 
 	 * Method checks employee register for employees with probationary status that has been employed for at least six months.
-	 * Updates status and gives a salary raise.
+	 * Updates status and gives a salary raise. This can be used when it's time for salary payment.
 	 */
 	public void checkSalaryRaise() {
-		for (Employee emp : empMap.values()) {
+		for (Employee emp : empList) {
 			if ((emp.getStatus() == EmploymentStatus.PROBATIONARY) && emp.getEmploymentDate().plusMonths(6).isBefore(LocalDate.now())) {
 				double oldSalary = emp.getSalary();
 				emp.permanentEmploymentRaise();
@@ -151,12 +149,14 @@ public class ManagementController {
 	 * FOR PRESENTATION
 	 */
 	public void loadDemo() {
-		addEmployee(new Doctor("Doctor1", "070-123 45 67", 40000));
-		addEmployee(new Doctor("Doctor2", "070-765 43 21", 35000));
 		addEmployee(new Nurse("Nurse1","070-555 55 55", 30000));
 		addEmployee(new Nurse("Nurse2", "08-777 88 99", 30000));
-		addEmployee(new Receptionist("Gittan","070- 333 44 55", 25000));
+		addEmployee(new Doctor("Doctor2", "070-123 45 67", 40000));
+		addEmployee(new Doctor("Doctor1", "070-765 43 21", 35000));
 		addEmployee(new Receptionist("Ulla-Bella","08-888 88 88", 40000));
+		addEmployee(new Receptionist("Gittan","070-333 44 55", 25000));
+		getEmployeeByID(1).setEmploymentDate(LocalDate.parse("2019-05-01"));
+	
 
 	}
 

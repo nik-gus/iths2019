@@ -1,17 +1,19 @@
 package model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+//import java.util.HashMap;
+import java.util.List;
 
 public class EmployeeRegister {
 	
-	private HashMap<Integer, Employee> empMap;
+	private List<Employee> empList;
 	
 	public EmployeeRegister() {
-		empMap = new HashMap<Integer, Employee>();
+		empList = new ArrayList<Employee>();
 	}
 
-	public HashMap<Integer, Employee> getEmpMap() {
-		return empMap;
+	public List<Employee> getEmpList() {
+		return empList;
 	}
 	
 } //end class

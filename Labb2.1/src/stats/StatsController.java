@@ -1,7 +1,7 @@
-package controller;
+package stats;
 
-import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.List;
 
 import app.Application;
 import model.Doctor;
@@ -9,26 +9,23 @@ import model.Employee;
 import model.EmployeeRegister;
 import model.Nurse;
 import utilities.EmploymentStatus;
-import view.StatsUI;
 
 public class StatsController {
 	private StatsUI statsUI;
-	private HashMap<Integer, Employee> empMap;
+	private List<Employee> empList;
 
-	
-	public StatsController(EmployeeRegister empRec, StatsUI statsUI) {
+	public StatsController(EmployeeRegister empReg, StatsUI statsUI) {
 		this.statsUI = statsUI;
-		empMap = empRec.getEmpMap();
+		empList = empReg.getEmpList();
 	}
 	
-
 	public void runStatistics() {
 		int choice;
 		statsUI.showStatsMenu();
 		try {
 		choice = Application.sc.nextInt();
 		} catch (InputMismatchException e) {
-			choice = 99;
+			choice = 0;
 		}
 		Application.sc.nextLine();
 		switch (choice) {
@@ -52,21 +49,20 @@ public class StatsController {
 		default: 
 			break;
 		}
-
 	}
 	
 	public void getCompanySalaryAverage() {
 		double sum = 0;
-		for (Employee emp : empMap.values()) {
+		for (Employee emp : empList) {
 			sum += emp.getSalary();
 		}
-		statsUI.printCompanySalaryAverage(sum / empMap.size()); //no casting needed?
+		statsUI.printCompanySalaryAverage(sum / empList.size()); 
 	}
 
 	public void getDoctorSalaryAverage() {
 		double sum = 0;
 		int noOfDoctors = 0;
-		for (Employee emp : empMap.values()) {
+		for (Employee emp : empList) {
 			if (emp instanceof Doctor) {
 			sum += emp.getSalary();
 			noOfDoctors++;
@@ -77,12 +73,12 @@ public class StatsController {
 	
 	public void getMaxSalaryEmployees() {
 		double max = 0;
-		for (Employee emp : empMap.values()) {
+		for (Employee emp : empList) {
 			if (emp.getSalary() > max) {
 				max = emp.getSalary();
 			}
 		}
-		for (Employee emp : empMap.values()) {
+		for (Employee emp : empList) {
 			if (emp.getSalary() == max) {
 				statsUI.printEmployee(emp);
 			}
@@ -90,13 +86,13 @@ public class StatsController {
 	}
 	
 	public void getMinSalaryEmployees() {
-		double min = empMap.get(1).getSalary();
-		for (Employee emp : empMap.values()) {
+		double min = empList.get(1).getSalary();
+		for (Employee emp : empList) {
 			if (emp.getSalary() < min) {
 				min = emp.getSalary();
 			}
 		}
-		for (Employee emp : empMap.values()) {
+		for (Employee emp : empList) {
 			if (emp.getSalary() == min) {
 				statsUI.printEmployee(emp);
 			}
@@ -106,7 +102,7 @@ public class StatsController {
 	public void getNursesOnProb() {
 		int noOfProbNurses = 0;
 		int noOfPermNurses = 0;
-		for (Employee emp : empMap.values()) {
+		for (Employee emp : empList) {
 			if (emp instanceof Nurse) {
 				if (emp.getStatus() == EmploymentStatus.PROBATIONARY) {
 					noOfProbNurses++;

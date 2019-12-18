@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import utilities.EmploymentStatus;
 
 
-public abstract class Employee {
+public abstract class Employee implements Comparable<Employee> {
 	
-	protected static int idCounter = 1;
-	protected final int EMPID; //unikt id nr. final va??
+	protected static int idCounter = 0;
+	protected final int EMPID; 
 	protected String name;
 	protected String telNo;
 	protected double salary;
@@ -28,9 +28,17 @@ public abstract class Employee {
 	    return idCounter++;
 	}    
 	
-	 /* Must be overridden!*/
+	@Override
+	public int compareTo(Employee o) {
+		if(this.name.compareTo(o.getName()) == 0) {
+			return this.employmentDate.compareTo(o.getEmploymentDate());
+		}
+		return this.name.compareTo(o.getName());
+	}
+
+	/* Must be overridden!*/
 	public abstract void permanentEmploymentRaise();
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder("\nEMPLOYEE #");
 		sb.append(EMPID);

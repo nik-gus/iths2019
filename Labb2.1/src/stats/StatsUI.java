@@ -1,11 +1,11 @@
-package view;
+package stats;
 
 import model.Employee;
 
 public class StatsUI {
 
 	public void showStatsMenu() {
-		System.out.println("\n---------- STATS MENU ----------");
+		System.out.println("\n---------- STATS MENU ----------\n");
 		System.out.println("1. Average wage at the company."); 
 		System.out.println("2. Average wage for Doctors.");
 		System.out.println("3. Employee(s) with highest salary in the company");

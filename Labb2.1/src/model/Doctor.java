@@ -17,5 +17,7 @@ public class Doctor extends Employee {
 	public String toString() {
 		return super.toString() +"\nOccupation: Doctor";
 	}
+
+	
 	
 } //end class
